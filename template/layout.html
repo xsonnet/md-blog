@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="../public/style.css">
+</head>
+<body>
+	<header class="content clear mb">
+		<a href="/" class="logo">
+            <span class="icon">L</span>
+            <span>杏水流光</span>
+        </a>
+        <nav>
+        	<a href="/">首页</a>
+        	<a href="">Nim语言</a>
+        	<a href="">linux相关</a>
+        	<a href="">生活</a>
+        	<a href="">其他</a>
+        </nav>
+	</header>
+	{% block "content" %}{% endblock %}
+</body>
+</html>
