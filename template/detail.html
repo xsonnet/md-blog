@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="detail container blog">
+		<h1 class="title">{{ title }}</h1>
+		<div class="info">
+			<span>分类：{{ category }}</span>
+			<span>发布于：{{ date }}</span>
+		</div>
+		<div class="summary">{{ summary }}</div>
+		<div class="text article">{{ content }}</div>
+	</div>
+{% endblock %}

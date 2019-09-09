@@ -69,7 +69,8 @@ proc gen_list_file(list_blogs: seq[Blog], category: string = "") =
             "list": list_html.join(""),
             "preview": if page > 1: """<a href="index$1.html">上一页</a>""" % [if page == 2: "" else: "-" & $(page - 1)] else: "",
             "next": if page < total_page: """<a href="index-$1.html">下一页</a>""" % [$(page + 1)] else: "",
-            "page": page
+            "page": page,
+            "total_page": total_page
         }
         var html = templates.renderTemplate("list.html", context)
         var target_dir = html_path & category

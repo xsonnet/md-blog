@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% set title "首页" %}
+{% block content %}
+	<div class="container">
+		<ul class="blog-list">
+	        {{ list }}
+	    </ul>
+	    <div class="clear">
+	    	<div class="left">当前在第{{ page }}页，共{{ total_page }}页</div>
+	    	<div class="right">
+	    		{{ preview }}
+	    		{{ next }}
+	    	</div>
+	    </div>
+	</div>
+{% endblock %}
