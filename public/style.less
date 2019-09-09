@@ -30,6 +30,12 @@ a {
 }
 .clear {
 	overflow: hidden;
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
 }
 .center {
 	text-align: center;
@@ -39,6 +45,9 @@ a {
 }
 .mb-10 {
 	margin-bottom: 10px;
+}
+.text {
+  line-height: 1.6;
 }
 header {
   background: @black;
@@ -115,4 +124,39 @@ header {
 			color: #999;
 		}
 	}
+}
+.detail {
+  .title {
+    font-size: 1.6em;
+    text-align: center;
+    color: @black;
+  }
+  .info {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    span + span {
+      margin-left: 1em;
+    }
+  }
+  .summary {
+    background: @light;
+    padding: 10px;
+    line-height: 1.6;
+  }
+}
+.article {
+  code {
+    background: #fff;
+    padding: 3px 8px;
+  }
+  pre code {
+    display: block;
+    background: #fff;
+    padding: 1em;
+    border-left: @gray 2px solid;
+  }
+  ol, ul {
+    padding-left: 1.5em;
+  }
 }
