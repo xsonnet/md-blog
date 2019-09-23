@@ -2,4 +2,5 @@
 markdown/
 html/
 *.exe
+blog
 public/*.map
