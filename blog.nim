@@ -1,4 +1,4 @@
-import os, strutils, sequtils, json, re
+import os, strutils, sequtils, json
 import nwt
 import markdown
 
@@ -13,7 +13,7 @@ type
 
 const markdown_path = "./markdown/" # Markdown文件路径
 const html_path = "./html/" # 生成的HTML文件路径
-const page_size = 3 #分页大小
+const page_size = 2 #分页大小
 
 var templates = newNwt("template/*.html") # 模板引擎
 var categories: seq[string] # 所有分类
@@ -56,14 +56,22 @@ proc gen_blog_list_html(list_blogs: seq[Blog]): seq[string] =
         var html = templates.renderTemplate("list-item.html", context)
         result.add html
 
+# 写入HTML文件
+proc writeHtmlFile(source_file, target_file: string, params: JsonNode) =
+    var html = templates.renderTemplate(source_file, params)
+    var meta = splitFile(target_file)
+    if not existsDir(meta.dir): createDir(meta.dir)
+    writeFile(target_file, html)
+
 # 生成博客列表文件
 proc gen_list_file(list_blogs: seq[Blog], category: string = "") =
-    # TODO 生成首页异常
     var total_page = list_blogs.len div page_size # 总页数
-    if list_blogs.len mod page_size > 0: total_page += 1
+    var m = list_blogs.len mod page_size # 余数
+    if m > 0: total_page += 1
     for page in 1..total_page:
         var begin = page * page_size - page_size
-        var number = if page == total_page: list_blogs.len mod page_size else: page_size
+        var number = page_size
+        if page == total_page and m > 0: number = m
         var list_html = gen_blog_list_html(list_blogs[begin..begin + number - 1])
         var context = %* {
             "list": list_html.join(""),
@@ -72,12 +80,9 @@ proc gen_list_file(list_blogs: seq[Blog], category: string = "") =
             "page": page,
             "total_page": total_page
         }
-        var html = templates.renderTemplate("list.html", context)
-        var target_dir = html_path & category
-        if not existsDir(target_dir): createDir(target_dir)
-        writeFile(target_dir & "/index" & (if page > 1: "-" & $(page) else : "") & ".html", html)
+        var target_file = html_path & category & "/index" & (if page > 1: "-" & $(page) else : "") & ".html"
+        writeHtmlFile("list.html", target_file, context)
         
-
 # 生成首页
 proc gen_index_page() =
     gen_list_file(blogs)
@@ -110,13 +115,10 @@ proc gen_detail_page() =
             "keywords": item.keywords,
             "summary": item.summary
         }
-        var html = templates.renderTemplate("detail.html", context)
-        var file_meta = splitFile(item.file)
-        var target_dir = html_path & file_meta.dir
-        if not existsDir(target_dir): createDir(target_dir)
-        var target_file = target_dir & "/" & file_meta.name & ".html"
-        writeFile(target_file, html)
-        echo "Generated blog page of ", target_dir & "/" & file_meta.name & ".html"
+        var meta = splitFile(item.file)
+        var target_file = html_path & meta.dir & "/" & meta.name & ".html"
+        writeHtmlFile("detail.html", target_file, context)
+        echo "Generated blog page of ", target_file
 
 init_markdown_files()
 gen_index_page()
