@@ -80,6 +80,7 @@ proc gen_list_file(list_blogs: seq[Blog], category: string = "") =
         if page == total_page and m > 0: number = m
         var list_html = gen_blog_list_html(list_blogs[begin..begin + number - 1])
         var context = %* {
+            "title": if category.len  == 0: "首页" else: category,
             "list": list_html.join(""),
             "preview": if page > 1: """<a href="index$1.html">上一页</a>""" % [if page == 2: "" else: "-" & $(page - 1)] else: "",
             "next": if page < total_page: """<a href="index-$1.html">下一页</a>""" % [$(page + 1)] else: "",
