@@ -1,4 +1,4 @@
-import os, strutils, sequtils, json
+import os, strutils, sequtils, json, algorithm, times
 import nwt
 import markdown
 
@@ -13,7 +13,7 @@ type
 
 const markdown_path = "./markdown/" # Markdown文件路径
 const html_path = "./html/" # 生成的HTML文件路径
-const page_size = 2 #分页大小
+const page_size = 10 #分页大小
 
 var templates = newNwt("template/*.html") # 模板引擎
 var categories: seq[string] # 所有分类
@@ -32,6 +32,11 @@ proc init_blog_form_md(file: string): Blog =
         if num == 3: result.summary = line
         if num < 4: num += 1
 
+proc sort_blog(x, y: Blog): int =
+    var a = parse(x.date, "yyyy-MM-dd")
+    var b = parse(y.date, "yyyy-MM-dd")
+    if a < b: -1 else: 1
+
 # 获取Markdown文件
 proc init_markdown_files() =
     for file in walkDirRec(markdown_path, relative = true):
@@ -40,6 +45,7 @@ proc init_markdown_files() =
             if not categories.contains meta.dir: categories.add meta.dir # 分类
             var blog = init_blog_form_md(file)
             blogs.add blog
+    blogs.sort(sort_blog, order = SortOrder.Descending)
 
 # 生成博客列表内容
 proc gen_blog_list_html(list_blogs: seq[Blog]): seq[string] =
