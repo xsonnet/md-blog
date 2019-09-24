@@ -1,9 +1,9 @@
 <li>
 	<a href="/{{ file }}" class="title mb-10">{{ title }}</a>
 	<div class="info mb-10">
-		分类：<a href="/{{ category }}">{{ category }}</a>
-		发布于：<span>{{ date }}</span>
+        <span class="item">分类：<a href="/{{ category }}">{{ category }}</a></span>
+        <span class="item">发布于：<span>{{ date }}</span></span>
+        <span class="item">标签：{{ keywords }}</span>
 	</div>
-	<div class="summary mb-10">{{ summary }}</div>
-	<div class="keywords">{{ keywords }}</div>
+	<div class="summary">{{ summary }}</div>
 </li>

@@ -9,13 +9,13 @@
 body {
 	margin: 0;
 	font-size: 14px;
-	background: #f8f8f8;
 	font-family: open sans,helvetica neue,Helvetica,Arial,sans-serif;
 }
 a {
 	text-decoration: none;
 	color: inherit;
 	&:hover {
+    color: @orange;
 		text-decoration: underline;
 	}
 }
@@ -50,59 +50,17 @@ a {
   line-height: 1.6;
 }
 header {
-  background: @black;
-  color: #fff;
-  a {
-    color: #fff;
-    text-decoration: none;
-    &:hover {
-      color: @light;
-    }
-  }
-  .logo {
-    float: left;
-    font-size: 1.3em;
-    line-height: 30px;
-    height: 30px;
-    .icon {
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
-      display: inline-block;
-      margin-right: 5px;
-      background: @orange;
-      color: #fff;
-      text-align: center;
-      font-family: georgia, sans-serif;
-    }
-    &:hover {
-      text-decoration: none;
-    }
-  }
+  padding: 20px 0;
+  border-bottom: @light 1px solid;
+  margin-bottom: 20px;
   nav {
     line-height: 30px;
-    float: right;
     a {
-      margin: 3px 15px;
+      text-decoration: none;
+      font-size: 1.3em;
     }
-  }
-}
-@media (max-width: 600px) {
-  header {
-    nav {
-      a {
-        margin: 3px;
-      }
-    }
-  }
-}
-@media (max-width: 400px) {
-  header {
-    .logo, nav {
-      float: none;
-    }
-    nav {
-      margin-top: 10px;
+    a + a {
+      margin-left: 1em;
     }
   }
 }
@@ -111,14 +69,18 @@ header {
 	padding: 0;
 	list-style: none;
 	li {
-		margin-bottom: 10px;
-		padding-bottom: 10px;
-		border-bottom: @light 1px solid;
+		padding: 10px 0;
+		& + li {
+      border-top: @light 1px solid;
+    }
 		.title {
-			font-size: 1.4em;
+			font-size: 1.2em;
 		}
 		.info {
 			margin: 10px 0;
+      .item + .item {
+        margin-left: 1em;
+      }
 		}
 		.summary {
 			color: #727272;
@@ -131,13 +93,11 @@ header {
 .detail {
   .title {
     font-size: 1.6em;
-    text-align: center;
     color: @black;
   }
   .info {
     margin-top: 5px;
     margin-bottom: 10px;
-    text-align: center;
     span + span {
       margin-left: 1em;
     }
@@ -161,5 +121,19 @@ header {
   }
   ol, ul {
     padding-left: 1.5em;
+  }
+}
+footer {
+  padding: 20px 0;
+  border-top: @light 1px solid;
+  .about {
+    .links {
+      a + a {
+        margin-left: 0.5em;
+      }
+    }
+  }
+  .copyright {
+    float: right;
   }
 }

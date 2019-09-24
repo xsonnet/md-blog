@@ -9,11 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/public/style.css">
 </head>
 <body>
-	<header class="content clear mb">
-		<a href="/" class="logo">
-            <span class="icon">L</span>
-            <span>杏水流光</span>
-        </a>
+	<header class="container clear">
         <nav>
         	<a href="/">首页</a>
         	<a href="/代码">代码</a>
@@ -23,5 +19,14 @@
         </nav>
 	</header>
 	{% block "content" %}{% endblock %}
+    <footer class="container clear">
+        <div class="about left">
+            <div class="links">
+                <a href="https://github.com/xsonnet">Github</a>
+                <a href="https://gitee.com/nekocharm">Gitee</a>
+            </div>
+        </div>
+        <div class="right">&copy; 2019</div>
+    </footer>
 </body>
 </html>
