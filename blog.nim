@@ -1,6 +1,6 @@
 import os, strutils, sequtils, json, algorithm, times
-import nwt
 import markdown
+import render
 
 type
     Blog = object
@@ -15,7 +15,7 @@ const markdown_path = "./markdown/" # Markdown文件路径
 const html_path = "./html/" # 生成的HTML文件路径
 const page_size = 10 #分页大小
 
-var templates = newNwt("template/*.html") # 模板引擎
+var view = View(path: "./template/") #实例化View对象
 var categories: seq[string] # 所有分类
 var blogs: seq[Blog] # 所有博客
 
@@ -54,6 +54,13 @@ proc initMdFile() =
             blogs.add blog
     blogs.sort(sortBlog, order = SortOrder.Descending)
 
+# 写入HTML文件
+proc writeHtmlFile(sourceFile, targetFile: string, data: JsonNode) =
+    var source = view.render(sourceFile, data, uglify = true)
+    var meta = splitFile(targetFile)
+    if not existsDir(meta.dir): createDir(meta.dir)
+    writeFile(targetFile, source)
+
 # 生成博客列表内容
 proc genBlogListHTML(list_blogs: seq[Blog]): seq[string] =
     for item in list_blogs:
@@ -66,15 +73,8 @@ proc genBlogListHTML(list_blogs: seq[Blog]): seq[string] =
             "summary": item.summary,
             "file": meta.dir & "/" & meta.name & ".html"
         }
-        var html = templates.renderTemplate("list-item.html", context)
+        var html = view.render("list-item.html", context, uglify = true)
         result.add html
-
-# 写入HTML文件
-proc writeHtmlFile(source_file, target_file: string, params: JsonNode) =
-    var html = templates.renderTemplate(source_file, params)
-    var meta = splitFile(target_file)
-    if not existsDir(meta.dir): createDir(meta.dir)
-    writeFile(target_file, html)
 
 # 生成博客列表文件
 proc genListFile(list_blogs: seq[Blog], category: string = "") =

@@ -1,12 +1,24 @@
-{% extends "layout.html" %}
-{% block content %}
-	<div class="detail container mb">
-		<h1 class="title">{{ title }}</h1>
-		<div class="info">
-			<span>分类：<a href="/{{ category }}">{{ category }}</a></span>
-			<span>发布于：{{ date }}</span>
-		</div>
-		<div class="summary">{{ summary }}</div>
-		<div class="text article">{{ content }}</div>
-	</div>
-{% endblock %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }} - 杏水流光</title>
+    <link rel="stylesheet" type="text/css" href="/public/style.css">
+</head>
+<body>
+    {% include header.html %}
+    <div class="detail container mb">
+        <h1 class="title">{{ title }}</h1>
+        <div class="info">
+            <span>分类：<a href="/{{ category }}">{{ category }}</a></span>
+            <span>发布于：{{ date }}</span>
+        </div>
+        <div class="summary">{{ summary }}</div>
+        <div class="text article">{{ content }}</div>
+    </div>
+    {% include footer.html %}
+</body>
+</html>
