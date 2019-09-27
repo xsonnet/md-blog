@@ -15,7 +15,7 @@ const markdown_path = "./markdown/" # Markdown文件路径
 const html_path = "./html/" # 生成的HTML文件路径
 const page_size = 10 #分页大小
 
-var view = View(path: "./template/") #实例化View对象
+var view = NView(path: "./template/") #实例化View对象
 var categories: seq[string] # 所有分类
 var blogs: seq[Blog] # 所有博客
 
