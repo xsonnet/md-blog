@@ -25,8 +25,7 @@ proc parseData(v: View, source: string, data: JsonNode): string =
         var key = m.replace(start).replace(stop)
         result = result.replace(m, data[key].getStr())
 
-proc render*(v: View, file: string, data: JsonNode = %* {}, uglify: bool = false): string = 
+proc render*(v: View, file: string, data: JsonNode = %* {}): string = 
     result = $(v.path & file).open().readAll()
     result = v.parseInclude(result)
     result = v.parseData(result, data)
-    if uglify: result = result.replace(re"\t|\n").replace(re"\s{2,}", " ")

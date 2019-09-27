@@ -56,7 +56,7 @@ proc initMdFile() =
 
 # 写入HTML文件
 proc writeHtmlFile(sourceFile, targetFile: string, data: JsonNode) =
-    var source = view.render(sourceFile, data, uglify = true)
+    var source = view.render(sourceFile, data)
     var meta = splitFile(targetFile)
     if not existsDir(meta.dir): createDir(meta.dir)
     writeFile(targetFile, source)
@@ -73,7 +73,7 @@ proc genBlogListHTML(list_blogs: seq[Blog]): seq[string] =
             "summary": item.summary,
             "file": meta.dir & "/" & meta.name & ".html"
         }
-        var html = view.render("list-item.html", context, uglify = true)
+        var html = view.render("list-item.html", context)
         result.add html
 
 # 生成博客列表文件
