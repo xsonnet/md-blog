@@ -13,7 +13,7 @@ proc parseExp(v: NView, expression: string): string =
 
 # 处理代码
 proc prseSource(v: NView, source: string, data: JsonNode): string = 
-    let reg = re"\{%(\s?\w+)+\.?\w+\s?%\}|\{{2}\s?\w+\s?\}{2}"
+    let reg = re"\{%(\s?\w+\/?)+\.?\w+\s?%\}|\{{2}\s?\w+\s?\}{2}"
     result = source
     for token in source.findAll(reg):
         if token.startsWith("{{") and token.endsWith("}}"):
@@ -26,3 +26,4 @@ proc prseSource(v: NView, source: string, data: JsonNode): string =
 proc render*(v: NView, file: string, data: JsonNode = %* {}): string = 
     result = $(v.path & file).open().readAll()
     result = v.prseSource(result, data)
+    result = result.replace(re"\>(\t|\n|\s)+\<", "><") #去掉标签中的换行与空格
