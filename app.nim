@@ -53,8 +53,9 @@ proc genListPage(app: App) =
         var list: seq[Blog]
         for blog in app.blogs:
             if blog.category == item: list.add blog
-        app.genListFile(list, category = item)
-        echo "Generated list pages of ", item
+        if list.len > 0:
+            app.genListFile(list, category = item)
+            echo "Generated list pages of ", item
 
 # 生成博客页
 proc genDetailPage(app: App) =
