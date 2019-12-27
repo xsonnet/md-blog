@@ -13,7 +13,7 @@ proc parseExp(v: NView, expression: string): string =
 
 # 处理代码
 proc prseSource(v: NView, source: string, data: JsonNode): string = 
-    let reg = re"\{%(\s?\w+\/?)+\.?\w+\s?%\}|\{{2}\s?\w+\s?\}{2}"
+    let reg = re"\{%(\s?\w+\/?\-?)+\.?\w+\s?%\}|\{{2}\s?\w+\s?\}{2}"
     result = source
     for token in source.findAll(reg):
         if token.startsWith("{{") and token.endsWith("}}"):
