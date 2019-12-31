@@ -35,11 +35,6 @@ proc genListFile(app: App, list: seq[Blog], category: string = "") =
         var begin = page * app.pageSize - app.pageSize
         var number = app.pageSize
         if page == totalPage and m > 0: number = m
-        echo "总数量：", list.len
-        echo "栏目：", category
-        echo "页码：", page
-        echo "开始：", begin
-        echo "数量：", number
         let html = util.genBlogListHTML(list[begin..begin + number - 1])
         var context = %* {
             "title": if category.len  == 0: "首页" else: category,
